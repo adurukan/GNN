@@ -1,0 +1,8 @@
+prepare:
+  path_fetures: 'data/elliptic_txs_features.csv'
+  path_edges: 'data/elliptic_txs_edgelist.csv'
+  path_classes: 'data/elliptic_txs_classes.csv'
+eda:
+  path_fetures: 'src/prepared/df_features.csv'
+  path_edges: 'src/prepared/df_edges.csv'
+  path_classes: 'src/prepared/df_classes.csv'

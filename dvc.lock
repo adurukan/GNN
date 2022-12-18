@@ -1,0 +1,34 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: src/prepare.py
+      md5: e443a3535f34ff4507f91418874c1e83
+      size: 1761
+    params:
+      params.yaml:
+        prepare.path_classes: data/elliptic_txs_classes.csv
+        prepare.path_edges: data/elliptic_txs_edgelist.csv
+        prepare.path_fetures: data/elliptic_txs_features.csv
+    outs:
+    - path: src/prepared
+      md5: e4f6f3619bd378a8dcf656cc27b99ac4.dir
+      size: 672675377
+      nfiles: 3
+  eda:
+    cmd: python src/eda.py
+    deps:
+    - path: src/eda.py
+      md5: 3973bccb2b35cc3a03bd0303499a61eb
+      size: 2466
+    params:
+      params.yaml:
+        eda.path_classes: src/prepared/df_classes.csv
+        eda.path_edges: src/prepared/df_edges.csv
+        eda.path_fetures: src/prepared/df_features.csv
+    outs:
+    - path: src/figures
+      md5: b7ba66fe8c537a86026b9d12985660eb.dir
+      size: 156303
+      nfiles: 2

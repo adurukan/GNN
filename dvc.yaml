@@ -1,0 +1,21 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - src/prepare.py
+    params:
+    - prepare.path_fetures
+    - prepare.path_edges
+    - prepare.path_classes
+    outs:
+    - src/prepared
+  eda:
+    cmd: python src/eda.py
+    deps:
+    - src/eda.py
+    params:
+    - eda.path_fetures
+    - eda.path_edges
+    - eda.path_classes
+    outs:
+    - src/figures
