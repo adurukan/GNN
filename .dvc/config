@@ -1,0 +1,5 @@
+[core]
+    autostage = true
+    remote = my_local_remote
+['remote "my_local_remote"']
+    url = /tmp/dvcstore
