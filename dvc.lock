@@ -29,6 +29,44 @@ stages:
         eda.path_fetures: src/prepared/df_features.csv
     outs:
     - path: src/figures
-      md5: b7ba66fe8c537a86026b9d12985660eb.dir
-      size: 156303
+      md5: 70fdef00318ed2afc7da721dc3f8484d.dir
+      size: 158028
       nfiles: 2
+  generate:
+    cmd: python src/generate.py
+    deps:
+    - path: src/generate.py
+      md5: 153657fda65bcf0022817e5f1c91d913
+      size: 3629
+    params:
+      params.yaml:
+        generate.path_classes: src/prepared/df_classes.csv
+        generate.path_edges: src/prepared/df_edges.csv
+        generate.path_fetures: src/prepared/df_features.csv
+    outs:
+    - path: src/generated
+      md5: b404deba20e5c4a16ff403081918f339.dir
+      size: 338434392
+      nfiles: 6
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: src/train.py
+      md5: e208d7ff8bec237ebda3f9ed185acc54
+      size: 1862
+    params:
+      params.yaml:
+        train.X_train: src/generated/X_train.pt
+        train.X_valid: src/generated/X_valid.pt
+        train.data_train: src/generated/data_train.pt
+        train.train_idx: src/generated/train_idx.pt
+        train.valid_idx: src/generated/valid_idx.pt
+        train.y_train: src/generated/y_train.pt
+    outs:
+    - path: src/model
+      md5: f08fe5b76e641ec76d674498e56bd423.dir
+      size: 339447
+      nfiles: 1
+    - path: training_loss_acc.json
+      md5: 579cc048614f2431eafbd012b4d3f06e
+      size: 96

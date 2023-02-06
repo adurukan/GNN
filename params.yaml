@@ -6,3 +6,19 @@ eda:
   path_fetures: 'src/prepared/df_features.csv'
   path_edges: 'src/prepared/df_edges.csv'
   path_classes: 'src/prepared/df_classes.csv'
+generate:
+  path_fetures: 'src/prepared/df_features.csv'
+  path_edges: 'src/prepared/df_edges.csv'
+  path_classes: 'src/prepared/df_classes.csv'
+train:
+  data_train: 'src/generated/data_train.pt'
+  train_idx: 'src/generated/train_idx.pt'
+  valid_idx: 'src/generated/valid_idx.pt'
+  X_train: 'src/generated/X_train.pt'
+  X_valid: 'src/generated/X_valid.pt'
+  y_train: 'src/generated/y_train.pt'
+evaluate:
+  model_state: 'src/model/model_state.pt'
+  data_train: 'src/generated/data_train.pt'
+  train_idx: 'src/generated/train_idx.pt'
+  valid_idx: 'src/generated/valid_idx.pt'

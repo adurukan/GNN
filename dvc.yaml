@@ -19,3 +19,41 @@ stages:
     - eda.path_classes
     outs:
     - src/figures
+  generate:
+    cmd: python src/generate.py
+    deps:
+    - src/generate.py
+    params:
+    - generate.path_fetures
+    - generate.path_edges
+    - generate.path_classes
+    outs:
+    - src/generated
+  train:
+    cmd: python src/train.py
+    deps:
+    - src/train.py
+    params:
+    - train.data_train
+    - train.train_idx
+    - train.valid_idx
+    - train.X_train
+    - train.X_valid
+    - train.y_train
+    metrics:
+    - training_loss_acc.json:
+        cache: false
+    outs:
+    - src/model
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - src/evaluate.py
+    # - src/model
+    # - src/generated
+    params:
+    - evaluate.data_train
+    - evaluate.model_state
+    metrics:
+    - test_acc.json:
+        cache: false
