@@ -66,11 +66,11 @@ stages:
         train.patience: 50
     outs:
     - path: src/model
-      md5: afde01dff1402af61b098126dbda6499.dir
+      md5: 02c4335ce96acec7db9a7c90d49d1f76.dir
       size: 69367
       nfiles: 1
     - path: training_loss_acc.json
-      md5: 778a15eb45d1c6919ebc6a18b4245a43
+      md5: 488d4db3fdc60b678f1dc6da13f667dd
       size: 530
   dataset:
     cmd: python src/dataset.py
@@ -95,3 +95,15 @@ stages:
       md5: d2aa3b95240dfd9537bf628b03bab8a1.dir
       size: 144694487
       nfiles: 2
+  model:
+    cmd: python src/model.py
+    deps:
+    - path: src/dataset
+      md5: d2aa3b95240dfd9537bf628b03bab8a1.dir
+      size: 144694487
+      nfiles: 2
+    params:
+      params.yaml:
+        model.hidden_channels:
+        - 100
+        model.num_node_features: 166
