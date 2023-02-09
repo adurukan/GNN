@@ -4,8 +4,8 @@ stages:
     cmd: python src/prepare.py
     deps:
     - path: src/prepare.py
-      md5: e443a3535f34ff4507f91418874c1e83
-      size: 1761
+      md5: 271f9ee6b16fa689a5f49e93195e823a
+      size: 4782
     params:
       params.yaml:
         prepare.path_classes: data/elliptic_txs_classes.csv
@@ -13,9 +13,9 @@ stages:
         prepare.path_fetures: data/elliptic_txs_features.csv
     outs:
     - path: src/prepared
-      md5: e4f6f3619bd378a8dcf656cc27b99ac4.dir
-      size: 672675377
-      nfiles: 3
+      md5: 6fcc6525e2ae70e80fcc3276669ff61b.dir
+      size: 1332421899
+      nfiles: 6
   eda:
     cmd: python src/eda.py
     deps:
@@ -51,22 +51,47 @@ stages:
   train:
     cmd: python src/train.py
     deps:
+    - path: src/model.py
+      md5: 16d67333ea142c2afde62ce1c9b4a575
+      size: 1555
     - path: src/train.py
-      md5: e208d7ff8bec237ebda3f9ed185acc54
-      size: 1862
+      md5: ada402a7283e143791dffb5b5b427d6b
+      size: 3092
     params:
       params.yaml:
-        train.X_train: src/generated/X_train.pt
-        train.X_valid: src/generated/X_valid.pt
-        train.data_train: src/generated/data_train.pt
-        train.train_idx: src/generated/train_idx.pt
-        train.valid_idx: src/generated/valid_idx.pt
-        train.y_train: src/generated/y_train.pt
+        train.epoches: 100
+        train.lr: 0.001
+        train.path_test_loader: src/dataset/test_loader.pth
+        train.path_train_loader: src/dataset/train_loader.pth
+        train.patience: 50
     outs:
     - path: src/model
-      md5: f08fe5b76e641ec76d674498e56bd423.dir
-      size: 339447
+      md5: afde01dff1402af61b098126dbda6499.dir
+      size: 69367
       nfiles: 1
     - path: training_loss_acc.json
-      md5: 579cc048614f2431eafbd012b4d3f06e
-      size: 96
+      md5: 778a15eb45d1c6919ebc6a18b4245a43
+      size: 530
+  dataset:
+    cmd: python src/dataset.py
+    deps:
+    - path: src/dataset.py
+      md5: d90cf4873dca6ab02138ee06918aa05a
+      size: 3186
+    - path: src/prepared
+      md5: 6fcc6525e2ae70e80fcc3276669ff61b.dir
+      size: 1332421899
+      nfiles: 6
+    params:
+      params.yaml:
+        dataset.path_classes: src/prepared/elliptic_txs_classes.csv
+        dataset.path_edgelist_timed: src/prepared/elliptic_txs_edgelist_timed.csv
+        dataset.path_fetures: src/prepared/elliptic_txs_features.csv
+        dataset.path_merged_nodes: src/prepared/merged_nodes_df.csv
+        dataset.path_node_label: src/prepared/node_label.csv
+        dataset.path_nodetime: src/prepared/elliptic_txs_nodetime.csv
+    outs:
+    - path: src/dataset
+      md5: d2aa3b95240dfd9537bf628b03bab8a1.dir
+      size: 144694487
+      nfiles: 2

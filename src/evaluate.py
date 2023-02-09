@@ -19,7 +19,7 @@ import scipy.sparse as sp
 import yaml
 import os
 import json
-from model import model, device
+from model_2 import model, device
 
 params = yaml.safe_load(open("params.yaml"))["evaluate"]
 data_train, train_idx, valid_idx = (

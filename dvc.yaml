@@ -9,51 +9,57 @@ stages:
     - prepare.path_classes
     outs:
     - src/prepared
-  eda:
-    cmd: python src/eda.py
+  dataset:
+    cmd: python src/dataset.py
     deps:
-    - src/eda.py
+    - src/dataset.py
+    - src/prepared
     params:
-    - eda.path_fetures
-    - eda.path_edges
-    - eda.path_classes
+    - dataset.path_classes
+    - dataset.path_edgelist_timed
+    - dataset.path_fetures
+    - dataset.path_nodetime
+    - dataset.path_merged_nodes
+    - dataset.path_node_label
     outs:
-    - src/figures
-  generate:
-    cmd: python src/generate.py
+    - src/dataset
+  model:
+    cmd: python src/model.py
     deps:
-    - src/generate.py
+    - src/dataset
     params:
-    - generate.path_fetures
-    - generate.path_edges
-    - generate.path_classes
-    outs:
-    - src/generated
+    - model.num_node_features
+    - model.hidden_channels
   train:
     cmd: python src/train.py
     deps:
     - src/train.py
+    - src/model.py
     params:
-    - train.data_train
-    - train.train_idx
-    - train.valid_idx
-    - train.X_train
-    - train.X_valid
-    - train.y_train
-    metrics:
-    - training_loss_acc.json:
-        cache: false
+    - train.patience
+    - train.lr
+    - train.epoches
+    - train.path_train_loader
+    - train.path_test_loader
+    plots:
+      - training_loss_acc.json:
+          cache: false
+          x: epoch
+          y: 
+            train_loss
+            val_loss
+
     outs:
     - src/model
-  evaluate:
-    cmd: python src/evaluate.py
-    deps:
-    - src/evaluate.py
-    # - src/model
-    # - src/generated
-    params:
-    - evaluate.data_train
-    - evaluate.model_state
-    metrics:
-    - test_acc.json:
-        cache: false
+  # evaluate:
+  #   cmd: python src/evaluate.py
+  #   deps:
+  #   - src/evaluate.py
+  #   # - src/model
+  #   # - src/generated
+  #   params:
+  #   - evaluate.data_train
+  #   - evaluate.model_state
+  #   metrics:
+  #   - test_acc.json:
+  #       cache: false

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>DVC Plot</title>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+    
+    <style>
+        table {
+            border-spacing: 15px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id = "training_loss_acc_json">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "epoch": 50,
+        "if1": 0.5357303370786517,
+        "mf1": 0.9380323935212959,
+        "precision": 0.521891418563923,
+        "recall": 0.5503231763619575,
+        "rev": "workspace",
+        "train_loss": 0.3715497465694652,
+        "val_loss": 0.4127986252307892
+    },
+    {
+        "epoch": 100,
+        "if1": 0.5742782152230971,
+        "mf1": 0.9513497300539892,
+        "precision": 0.6654501216545012,
+        "recall": 0.5050784856879039,
+        "rev": "workspace",
+        "train_loss": 0.35705214563538046,
+        "val_loss": 0.40594665010770165
+    }
+]
+    },
+    "title": "training_loss_acc.json",
+    "width": 300,
+    "height": 300,
+    "params": [
+        {
+            "name": "smooth",
+            "value": 0.001,
+            "bind": {
+                "input": "range",
+                "min": 0.001,
+                "max": 1,
+                "step": 0.001
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "train_loss",
+                    "type": "quantitative",
+                    "title": "train_loss",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal",
+                    "legend": {
+                        "orient": "top",
+                        "direction": "vertical"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "loess": "train_loss",
+                    "on": "epoch",
+                    "groupby": [
+                        "rev",
+                        "filename",
+                        "field",
+                        "filename::field"
+                    ],
+                    "bandwidth": {
+                        "signal": "smooth"
+                    }
+                }
+            ]
+        },
+        {
+            "mark": {
+                "type": "point",
+                "tooltip": {
+                    "content": "data"
+                }
+            },
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "train_loss",
+                    "type": "quantitative",
+                    "title": "train_loss",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            }
+        }
+    ]
+}
+;
+            vegaEmbed('#training_loss_acc_json', spec);
+        </script>
+    </div>
+    
+</body>
+</html>
