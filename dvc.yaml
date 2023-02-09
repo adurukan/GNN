@@ -26,6 +26,7 @@ stages:
   model:
     cmd: python src/model.py
     deps:
+    - src/model.py
     - src/dataset
     params:
     - model.num_node_features
@@ -43,20 +44,28 @@ stages:
     - train.path_test_loader
     plots:
       - training_loss_acc.json:
-          cache: false
+          y: train_loss
           x: epoch
-          y: 
-            train_loss
-            val_loss
-
+      - val_loss_acc.json:
+          y: val_loss
+          x: epoch
+      - f1.json:
+          y: f1
+          x: epoch
+      - precision.json:
+          y: precision
+          x: epoch
+      - recall.json:
+          y: recall
+          x: epoch
     outs:
     - src/model
   # evaluate:
   #   cmd: python src/evaluate.py
   #   deps:
+  #   - src/model
   #   - src/evaluate.py
-  #   # - src/model
-  #   # - src/generated
+  #   - training_loss_acc.json
   #   params:
   #   - evaluate.data_train
   #   - evaluate.model_state

@@ -25,23 +25,13 @@
         "values": [
     {
         "epoch": 50,
-        "if1": 0.5357303370786517,
-        "mf1": 0.9380323935212959,
-        "precision": 0.521891418563923,
-        "recall": 0.5503231763619575,
         "rev": "workspace",
-        "train_loss": 0.3715497465694652,
-        "val_loss": 0.4127986252307892
+        "train_loss": 0.3689812982783598
     },
     {
         "epoch": 100,
-        "if1": 0.5742782152230971,
-        "mf1": 0.9513497300539892,
-        "precision": 0.6654501216545012,
-        "recall": 0.5050784856879039,
         "rev": "workspace",
-        "train_loss": 0.35705214563538046,
-        "val_loss": 0.40594665010770165
+        "train_loss": 0.35590723069275126
     }
 ]
     },
@@ -133,6 +123,446 @@
 }
 ;
             vegaEmbed('#training_loss_acc_json', spec);
+        </script>
+    </div>
+    
+
+    <div id = "val_loss_acc_json">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "epoch": 50,
+        "rev": "workspace",
+        "val_loss": 0.41094094117482505
+    },
+    {
+        "epoch": 100,
+        "rev": "workspace",
+        "val_loss": 0.39985215266545615
+    }
+]
+    },
+    "title": "val_loss_acc.json",
+    "width": 300,
+    "height": 300,
+    "params": [
+        {
+            "name": "smooth",
+            "value": 0.001,
+            "bind": {
+                "input": "range",
+                "min": 0.001,
+                "max": 1,
+                "step": 0.001
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "val_loss",
+                    "type": "quantitative",
+                    "title": "val_loss",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal",
+                    "legend": {
+                        "orient": "top",
+                        "direction": "vertical"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "loess": "val_loss",
+                    "on": "epoch",
+                    "groupby": [
+                        "rev",
+                        "filename",
+                        "field",
+                        "filename::field"
+                    ],
+                    "bandwidth": {
+                        "signal": "smooth"
+                    }
+                }
+            ]
+        },
+        {
+            "mark": {
+                "type": "point",
+                "tooltip": {
+                    "content": "data"
+                }
+            },
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "val_loss",
+                    "type": "quantitative",
+                    "title": "val_loss",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            }
+        }
+    ]
+}
+;
+            vegaEmbed('#val_loss_acc_json', spec);
+        </script>
+    </div>
+    
+
+    <div id = "f1_json">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "epoch": 50,
+        "f1": 0.5465949820788529,
+        "rev": "workspace"
+    },
+    {
+        "epoch": 100,
+        "f1": 0.6134282807731435,
+        "rev": "workspace"
+    }
+]
+    },
+    "title": "f1.json",
+    "width": 300,
+    "height": 300,
+    "params": [
+        {
+            "name": "smooth",
+            "value": 0.001,
+            "bind": {
+                "input": "range",
+                "min": 0.001,
+                "max": 1,
+                "step": 0.001
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "f1",
+                    "type": "quantitative",
+                    "title": "f1",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal",
+                    "legend": {
+                        "orient": "top",
+                        "direction": "vertical"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "loess": "f1",
+                    "on": "epoch",
+                    "groupby": [
+                        "rev",
+                        "filename",
+                        "field",
+                        "filename::field"
+                    ],
+                    "bandwidth": {
+                        "signal": "smooth"
+                    }
+                }
+            ]
+        },
+        {
+            "mark": {
+                "type": "point",
+                "tooltip": {
+                    "content": "data"
+                }
+            },
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "f1",
+                    "type": "quantitative",
+                    "title": "f1",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            }
+        }
+    ]
+}
+;
+            vegaEmbed('#f1_json', spec);
+        </script>
+    </div>
+    
+
+    <div id = "precision_json">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "epoch": 50,
+        "precision": 0.5308964316797214,
+        "rev": "workspace"
+    },
+    {
+        "epoch": 100,
+        "precision": 0.6828992072480181,
+        "rev": "workspace"
+    }
+]
+    },
+    "title": "precision.json",
+    "width": 300,
+    "height": 300,
+    "params": [
+        {
+            "name": "smooth",
+            "value": 0.001,
+            "bind": {
+                "input": "range",
+                "min": 0.001,
+                "max": 1,
+                "step": 0.001
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "precision",
+                    "type": "quantitative",
+                    "title": "precision",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal",
+                    "legend": {
+                        "orient": "top",
+                        "direction": "vertical"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "loess": "precision",
+                    "on": "epoch",
+                    "groupby": [
+                        "rev",
+                        "filename",
+                        "field",
+                        "filename::field"
+                    ],
+                    "bandwidth": {
+                        "signal": "smooth"
+                    }
+                }
+            ]
+        },
+        {
+            "mark": {
+                "type": "point",
+                "tooltip": {
+                    "content": "data"
+                }
+            },
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "precision",
+                    "type": "quantitative",
+                    "title": "precision",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            }
+        }
+    ]
+}
+;
+            vegaEmbed('#precision_json', spec);
+        </script>
+    </div>
+    
+
+    <div id = "recall_json">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "epoch": 50,
+        "recall": 0.5632502308402585,
+        "rev": "workspace"
+    },
+    {
+        "epoch": 100,
+        "recall": 0.556786703601108,
+        "rev": "workspace"
+    }
+]
+    },
+    "title": "recall.json",
+    "width": 300,
+    "height": 300,
+    "params": [
+        {
+            "name": "smooth",
+            "value": 0.001,
+            "bind": {
+                "input": "range",
+                "min": 0.001,
+                "max": 1,
+                "step": 0.001
+            }
+        }
+    ],
+    "layer": [
+        {
+            "mark": "line",
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "recall",
+                    "type": "quantitative",
+                    "title": "recall",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal",
+                    "legend": {
+                        "orient": "top",
+                        "direction": "vertical"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "loess": "recall",
+                    "on": "epoch",
+                    "groupby": [
+                        "rev",
+                        "filename",
+                        "field",
+                        "filename::field"
+                    ],
+                    "bandwidth": {
+                        "signal": "smooth"
+                    }
+                }
+            ]
+        },
+        {
+            "mark": {
+                "type": "point",
+                "tooltip": {
+                    "content": "data"
+                }
+            },
+            "encoding": {
+                "x": {
+                    "field": "epoch",
+                    "type": "quantitative",
+                    "title": "epoch"
+                },
+                "y": {
+                    "field": "recall",
+                    "type": "quantitative",
+                    "title": "recall",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            }
+        }
+    ]
+}
+;
+            vegaEmbed('#recall_json', spec);
         </script>
     </div>
     

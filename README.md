@@ -15,3 +15,13 @@ rm -f data/data.xml
 dvc pull
 dvc repro -> to run the stages.
 
+# DVC COMMANDS
+dvc dag
+dvc repro
+dvc repro prepare
+dvc exp run --queue -S train.lr=0.1
+dvc exp run --queue -S train.lr=0.01
+dvc exp run --run-all --jobs 2
+dvc exp show --drop 'prepare|dataset|train.path_train_loader|train.path_test_loader'
+dvc exp gc -a
+dvc exp gc -w

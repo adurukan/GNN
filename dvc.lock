@@ -55,23 +55,35 @@ stages:
       md5: 16d67333ea142c2afde62ce1c9b4a575
       size: 1555
     - path: src/train.py
-      md5: ada402a7283e143791dffb5b5b427d6b
-      size: 3092
+      md5: 290b5de848cb2158daab882ac128d0b4
+      size: 3981
     params:
       params.yaml:
-        train.epoches: 100
+        train.epoches: 1000
         train.lr: 0.001
         train.path_test_loader: src/dataset/test_loader.pth
         train.path_train_loader: src/dataset/train_loader.pth
         train.patience: 50
     outs:
+    - path: f1.json
+      md5: 7a3c4cabda784307fb05a9e5206299ac
+      size: 1361
+    - path: precision.json
+      md5: b3a1b73b665dbe6ba1fe47e09c036401
+      size: 1500
+    - path: recall.json
+      md5: d42c8718a5665d6045eb086928f66f30
+      size: 1448
     - path: src/model
-      md5: 02c4335ce96acec7db9a7c90d49d1f76.dir
+      md5: eb6e406a3b1f79f274654c393c781eb0.dir
       size: 69367
       nfiles: 1
     - path: training_loss_acc.json
-      md5: 488d4db3fdc60b678f1dc6da13f667dd
-      size: 530
+      md5: 09df246775346638d3358fd1b70c4752
+      size: 1529
+    - path: val_loss_acc.json
+      md5: 246809309af08edcda92a401c8409f9a
+      size: 1490
   dataset:
     cmd: python src/dataset.py
     deps:
@@ -102,6 +114,9 @@ stages:
       md5: d2aa3b95240dfd9537bf628b03bab8a1.dir
       size: 144694487
       nfiles: 2
+    - path: src/model.py
+      md5: 16d67333ea142c2afde62ce1c9b4a575
+      size: 1555
     params:
       params.yaml:
         model.hidden_channels:

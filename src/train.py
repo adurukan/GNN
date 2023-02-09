@@ -25,16 +25,15 @@ optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 criterion = torch.nn.CrossEntropyLoss(weight=torch.tensor([0.7, 0.3]).to(device))
 
 # Creating lists to append to later
-train_losses = []
-val_losses = []
-accuracies = []
-if1 = []
-precisions = []
-recalls = []
-iterations = []
+# train_losses = []
+# val_losses = []
+# accuracies = []
+# if1 = []
+# precisions = []
+# recalls = []
+# iterations = []
 results_ = []
 for epoch in range(epoches):
-
     model.train()
     train_loss = 0
     for data in train_loader:
@@ -62,19 +61,20 @@ for epoch in range(epoches):
             preds.append(pred.cpu())
 
         y, pred = torch.cat(ys, dim=0).numpy(), torch.cat(preds, dim=0).numpy()
+
         val_loss /= len(test_loader.dataset)
         f1 = f1_score(y, pred, average=None)
-        mf1 = f1_score(y, pred, average="micro")
+        mf1 = f1_score(y, pred, average="binary")
         precision = precision_score(y, pred, average=None)
         recall = recall_score(y, pred, average=None)
 
-        iterations.append(epoch + 1)
-        train_losses.append(train_loss)
-        val_losses.append(val_loss)
-        if1.append(f1[0])
-        accuracies.append(mf1)
-        precisions.append(precision[0])
-        recalls.append(recall[0])
+        # iterations.append(epoch + 1)
+        # train_losses.append(train_loss)
+        # val_losses.append(val_loss)
+        # if1.append(f1[0])
+        # accuracies.append(mf1)
+        # precisions.append(precision[0])
+        # recalls.append(recall[0])
         results_.append(
             {
                 "epoch": epoch + 1,
@@ -89,7 +89,37 @@ for epoch in range(epoches):
 print(results_)
 with open("training_loss_acc.json", "w") as f:
     json.dump(
-        [i for i in results_],
+        [{"epoch": i["epoch"], "train_loss": i["train_loss"]} for i in results_],
+        f,
+        indent=4,
+    )
+with open("val_loss_acc.json", "w") as f:
+    json.dump(
+        [{"epoch": i["epoch"], "val_loss": i["val_loss"]} for i in results_],
+        f,
+        indent=4,
+    )
+with open("f1.json", "w") as f:
+    json.dump(
+        [{"epoch": i["epoch"], "f1": i["if1"]} for i in results_],
+        f,
+        indent=4,
+    )
+with open("precision.json", "w") as f:
+    json.dump(
+        [{"epoch": i["epoch"], "precision": i["precision"]} for i in results_],
+        f,
+        indent=4,
+    )
+with open("recall.json", "w") as f:
+    json.dump(
+        [{"epoch": i["epoch"], "recall": i["recall"]} for i in results_],
+        f,
+        indent=4,
+    )
+with open("accuracy.json", "w") as f:
+    json.dump(
+        [{"epoch": i["epoch"], "accuracy": i["mf1"]} for i in results_],
         f,
         indent=4,
     )

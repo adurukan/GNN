@@ -16,14 +16,6 @@ model:
 train:
   patience: 50
   lr: 0.001
-  epoches: 100
+  epoches: 1000
   path_train_loader: "src/dataset/train_loader.pth"
   path_test_loader: "src/dataset/test_loader.pth"
-  X_train: 'src/generated/X_train.pt'
-  X_valid: 'src/generated/X_valid.pt'
-  y_train: 'src/generated/y_train.pt'
-evaluate:
-  model_state: 'src/model/model_state.pt'
-  data_train: 'src/generated/data_train.pt'
-  train_idx: 'src/generated/train_idx.pt'
-  valid_idx: 'src/generated/valid_idx.pt'

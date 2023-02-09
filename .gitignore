@@ -3,3 +3,9 @@
 /src/prepared
 /src/dataset
 /src/model
+/training_loss_acc.json
+/val_loss_acc.json
+/f1.json
+/precision.json
+/recall.json
+/data
